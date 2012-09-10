@@ -7,6 +7,9 @@ website: http://sakura-server.net/
 ##  Original Author     ##
 author: syam
 permissions:
+    cakepoison.reload:
+        default: op
+        description: Allow user reload command.
     cakepoison.ignore:
         default: op
         description: Ignore poisonous cake.

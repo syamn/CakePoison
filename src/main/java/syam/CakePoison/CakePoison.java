@@ -17,8 +17,11 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import syam.CakePoison.Cake.CakeFileManager;
+import syam.CakePoison.Cake.CakeManager;
 import syam.CakePoison.Command.BaseCommand;
 import syam.CakePoison.Command.HelpCommand;
+import syam.CakePoison.Listener.CPPlayerListener;
 import syam.CakePoison.Util.Metrics;
 
 /**
@@ -32,14 +35,14 @@ public class CakePoison extends JavaPlugin{
 	public final static String msgPrefix = "&6[CakePoison] &f";
 
 	// ** Listener **
-	//BEServerListener serverListener = new BEServerListener(this);
+	CPPlayerListener playerListener = new CPPlayerListener(this);
 
 	// ** Commands **
 	public static List<BaseCommand> commands = new ArrayList<BaseCommand>();
 
 	// ** Private Classes **
 	private ConfigurationManager config;
-	private CakePoison bm;
+	private CakeManager cm;
 
 	// ** Instance **
 	private static CakePoison instance;
@@ -68,13 +71,13 @@ public class CakePoison extends JavaPlugin{
 		}
 
 		// Regist Listeners
-		//pm.registerEvents(serverListener, this);
+		pm.registerEvents(playerListener, this);
 
 		// コマンド登録
 		registerCommands();
 
 		// マネージャ
-		//bm = new BookManager(this);
+		cm = new CakeManager(this);
 
 		// メッセージ表示
 		PluginDescriptionFile pdfFile=this.getDescription();
@@ -88,6 +91,9 @@ public class CakePoison extends JavaPlugin{
 	 */
 	@Override
 	public void onDisable(){
+		// 毒ケーキリスト書き込み
+		CakeFileManager.saveData();
+
 		// メッセージ表示
 		PluginDescriptionFile pdfFile=this.getDescription();
 		log.info("["+pdfFile.getName()+"] version "+pdfFile.getVersion()+" is disabled!");
@@ -149,6 +155,14 @@ public class CakePoison extends JavaPlugin{
 	}
 
 	/* getter */
+	/**
+	 * 毒ケーキマネージャを返す
+	 * @return CakeManager
+	 */
+	public CakeManager getManager() {
+		return cm;
+	}
+
 	/**
 	 * 設定マネージャを返す
 	 * @return ConfigurationManager
