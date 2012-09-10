@@ -1,0 +1,12 @@
+##  Plugin Information  ##
+name: CakePoison
+version: version-number-unknown
+main: syam.CakePoison.CakePoison
+description: CakePoison Plugin
+website: http://sakura-server.net/
+##  Original Author     ##
+author: syam
+permissions:
+    cakepoison.ignore:
+        default: op
+        description: Ignore poisonous cake.
