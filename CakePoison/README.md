@@ -1,4 +1,0 @@
-CakePoison
-==========
-
-CraftBukkit CakePoison Plugin
