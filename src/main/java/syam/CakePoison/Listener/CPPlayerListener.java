@@ -58,11 +58,6 @@ public class CPPlayerListener implements Listener{
     		if (block.getType() == Material.CAKE_BLOCK){
     			/* ケーキを右クリック */
 
-    			// 通常のケーキなら何もしない
-    			if (!CakeManager.isPoisonCake(block.getLocation())){
-    				return;
-    			}
-
     			boolean cancell = true;
 
     			// 手に持っているアイテムで分岐
