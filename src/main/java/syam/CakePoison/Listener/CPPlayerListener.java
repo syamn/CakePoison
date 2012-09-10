@@ -17,6 +17,8 @@ import org.bukkit.event.Event.Result;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.metadata.MetadataValue;
+import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionType;
 
 import syam.CakePoison.CakePoison;
 import syam.CakePoison.Cake.CakeActions;
@@ -56,6 +58,11 @@ public class CPPlayerListener implements Listener{
     		if (block.getType() == Material.CAKE_BLOCK){
     			/* ケーキを右クリック */
 
+    			// 通常のケーキなら何もしない
+    			if (!CakeManager.isPoisonCake(block.getLocation())){
+    				return;
+    			}
+
     			boolean cancell = true;
 
     			// 手に持っているアイテムで分岐
@@ -67,9 +74,13 @@ public class CPPlayerListener implements Listener{
 
     				// ポーション
     				case POTION:
-    					// TODO: check poison potion
-    					CakeActions.clickWithPoison(player, block);
-    					break;
+    					Potion potion = Potion.fromItemStack(player.getItemInHand());
+    					if (potion.getType() == PotionType.POISON && !potion.isSplash()){
+    						CakeActions.clickWithPoison(player, block, potion.getLevel());
+    						break;
+    					}
+    					// 毒ポーション以外はデフォルト処理へ継続させる
+    					// break;
 
     				// その他
 					default:
