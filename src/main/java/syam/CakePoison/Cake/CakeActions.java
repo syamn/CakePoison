@@ -8,8 +8,13 @@ import java.util.logging.Logger;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.Cake;
+import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionType;
 
 import syam.CakePoison.CakePoison;
 import syam.CakePoison.Util.Actions;
@@ -30,8 +35,6 @@ public class CakeActions {
      * @param block クリックしたケーキブロック
      */
     public static void clickWithMilkBucket(Player player, Block block){
-    	Actions.debug("clicked with milk bucket!"); //debug
-
     	// クリックしたケーキが毒ケーキなら解毒する
     	if(CakeManager.isPoisonCake(block.getLocation())){
     		CakeManager.removePoisonCake(block.getLocation());
@@ -49,8 +52,6 @@ public class CakeActions {
      * @param level クリックした毒ポーションのレベル
      */
     public static void clickWithPoison(Player player, Block block, int level){
-    	Actions.debug("clicked with poison potion!"); //debug
-
     	Integer oldLevel = CakeManager.getPoisonCake(block.getLocation());
     	int newLevel = (oldLevel == null) ? level : level + oldLevel;
     	CakeManager.setPoisonCake(block.getLocation(), newLevel);
@@ -60,11 +61,26 @@ public class CakeActions {
     }
 
     /**
-     * 毒ケーキを右クリック
+     * 毒ケーキを右クリックした
      * @param player クリックしたプレイヤー
      * @param block クリックしたケーキブロック
      */
-    public static void eatPoisonousCake(Player player, Block block){
-    	Actions.debug("eat poisonous cake!"); //debug
+    public static void eatPoisonousCake(Player player, Block block, int level){
+    	Potion potion = new Potion(PotionType.POISON, level);
+    	potion.apply(player);
+
+    	updateEatCakeBlock(block);
+
+    	Actions.message(null, player, "&cこれは毒ケーキでした！");
+    }
+
+    /**
+     * ケーキブロックのデータ値を変更し、食べられる回数を減らす
+     * @param block 対象のケーキブロック
+     */
+    private static void updateEatCakeBlock(Block block){
+    	Byte data = block.getData();
+    	//TODO: here..
+
     }
 }

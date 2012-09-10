@@ -33,6 +33,10 @@ public class HelpCommand extends BaseCommand{
 		}
 		Actions.message(sender, null, "&c===================================");
 
+		// player food level set to 1 for debugging this plugin
+		// TODO: remove this code
+		if(player != null) player.setFoodLevel(1);//debug
+
 		return;
 	}
 
