@@ -6,6 +6,11 @@ description: CakePoison Plugin
 website: http://sakura-server.net/
 ##  Original Author     ##
 author: syam
+commands:
+    cakepoison:
+      usage: /cakepoison help - to see the help
+      aliases: [cake, cp]
+      description: To see the CakePoison help.
 permissions:
     cakepoison.reload:
         default: op

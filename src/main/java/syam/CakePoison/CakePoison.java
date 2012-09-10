@@ -130,7 +130,7 @@ public class CakePoison extends JavaPlugin{
 	 */
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String args[]){
-		if (cmd.getName().equalsIgnoreCase("book")){
+		if (cmd.getName().equalsIgnoreCase("cakepoison")){
 			if(args.length == 0){
 				// 引数ゼロはヘルプ表示
 				args = new String[]{"help"};
