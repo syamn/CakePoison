@@ -4,7 +4,6 @@
  */
 package syam.CakePoison.Listener;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 import org.bukkit.Material;
@@ -14,7 +13,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPistonExtendEvent;
 
 import syam.CakePoison.CakePoison;
 import syam.CakePoison.Cake.CakeManager;

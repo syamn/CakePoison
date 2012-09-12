@@ -11,21 +11,19 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.Event.Result;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.MetadataValue;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionType;
 
 import syam.CakePoison.CakePoison;
 import syam.CakePoison.Cake.CakeActions;
 import syam.CakePoison.Cake.CakeManager;
-import syam.CakePoison.Util.Actions;
 
 /**
  * CPPlayerListener (CPPlayerListener.java)
