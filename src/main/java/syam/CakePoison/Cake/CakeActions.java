@@ -80,7 +80,11 @@ public class CakeActions {
      */
     private static void updateEatCakeBlock(Block block){
     	Byte data = block.getData();
-    	//TODO: here..
-
+    	data = (byte) (data + 1);
+    	if (data >= 0 && data <= 5){
+    		block.setData(data);
+    	}else{
+    		block.setType(Material.AIR);
+    	}
     }
 }
