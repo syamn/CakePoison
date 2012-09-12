@@ -22,7 +22,7 @@ public class HelpCommand extends BaseCommand{
 	@Override
 	public void execute() {
 		Actions.message(sender, null, "&c===================================");
-		Actions.message(sender, null, "&CakePoison Plugin version &3%version &bby syamn");
+		Actions.message(sender, null, "&bCakePoison Plugin version &3%version &bby syamn");
 		Actions.message(sender, null, " &b<>&f = required, &b[]&f = optional");
 		// 全コマンドをループで表示
 		for (BaseCommand cmd : CakePoison.commands.toArray(new BaseCommand[0])){
@@ -32,10 +32,6 @@ public class HelpCommand extends BaseCommand{
 			}
 		}
 		Actions.message(sender, null, "&c===================================");
-
-		// player food level set to 1 for debugging this plugin
-		// TODO: remove this code
-		if(player != null) player.setFoodLevel(1);//debug
 
 		return;
 	}
