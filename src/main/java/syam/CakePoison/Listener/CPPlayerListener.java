@@ -54,10 +54,6 @@ public class CPPlayerListener implements Listener{
     	if (!player.equals(Bukkit.getPlayer("syamn")))
     		return; //debug
 
-    	//TODO: 左クリックでも通常のケーキは食べられるらしい。 現状毒ケーキは右クリックにしか反応しない。
-    	//TODO: フードレベルチェックが必要。 現状毒ケーキはフードレベルが最大でも食べることができてしまう。
-
-
     	Block block = event.getClickedBlock();
     	if (block == null || block.getType() != Material.CAKE_BLOCK){
     		return;
@@ -84,7 +80,7 @@ public class CPPlayerListener implements Listener{
 
     	if (!action){
     		Integer level = CakeManager.getPoisonCake(block.getLocation());
-			if (level != null){
+			if (level != null && player.getFoodLevel() < 20){
 				CakeActions.eatPoisonousCake(player, block, level);
 				action = true;
 			}
