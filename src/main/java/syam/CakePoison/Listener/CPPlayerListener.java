@@ -44,36 +44,6 @@ public class CPPlayerListener implements Listener{
 
     /* ********************************************* */
 
-    //player eat ckes
-    @EventHandler(priority=EventPriority.NORMAL, ignoreCancelled = true)
-    public void onPlayerEatCake(final PlayerInteractEvent event){
-    	Player player = event.getPlayer();
-
-    	// allow only syamn to use this section for developing
-    	// TODO: remove this developer check
-    	if (!player.equals(Bukkit.getPlayer("syamn")))
-    		return; //debug
-
-    	if (event.getAction() == Action.RIGHT_CLICK_BLOCK ||
-    			event.getAction() == Action.LEFT_CLICK_BLOCK){
-    		Block block = event.getClickedBlock();
-
-    		// ケーキブロック以外は返す
-    		if (block.getType() != Material.CAKE_BLOCK){
-    			return;
-    		}
-
-    		Integer level = CakeManager.getPoisonCake(block.getLocation());
-			if (level != null){
-				CakeActions.eatPoisonousCake(player, block, level);
-
-				event.setCancelled(true);
-    			event.setUseInteractedBlock(Result.DENY);
-    			event.setUseItemInHand(Result.DENY);
-			}
-    	}
-    }
-
     // player clicked air/block
     @EventHandler(priority=EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerInteract(final PlayerInteractEvent event){
@@ -86,80 +56,44 @@ public class CPPlayerListener implements Listener{
 
     	//TODO: 左クリックでも通常のケーキは食べられるらしい。 現状毒ケーキは右クリックにしか反応しない。
     	//TODO: フードレベルチェックが必要。 現状毒ケーキはフードレベルが最大でも食べることができてしまう。
-    	if (event.getClickedBlock() == null)
-    		return;
+
 
     	Block block = event.getClickedBlock();
+    	if (block == null || block.getType() != Material.CAKE_BLOCK){
+    		return;
+    	}
 
+    	boolean action = false;
 
     	if (event.getAction() == Action.RIGHT_CLICK_BLOCK){
     		ItemStack is = player.getItemInHand();
     		// 牛乳バケツ
     		if (is.getType() == Material.MILK_BUCKET){
     			CakeActions.clickWithMilkBucket(player, block);
-
-    			event.setCancelled(true);
-    			event.setUseInteractedBlock(Result.DENY);
-    			event.setUseItemInHand(Result.DENY);
+    			action = true;
     		}
     		// 毒ポーション
     		if (is.getType() == Material.POTION){
     			Potion potion = Potion.fromItemStack(is);
     			if (potion.getType() == PotionType.POISON && !potion.isSplash()){
 					CakeActions.clickWithPoison(player, block, potion.getLevel());
-
-	    			event.setCancelled(true);
-	    			event.setUseInteractedBlock(Result.DENY);
-	    			event.setUseItemInHand(Result.DENY);
+					action = true;
 				}
     		}
     	}
 
-    	if (true) return;//debug
+    	if (!action){
+    		Integer level = CakeManager.getPoisonCake(block.getLocation());
+			if (level != null){
+				CakeActions.eatPoisonousCake(player, block, level);
+				action = true;
+			}
+    	}
 
-    	if (event.getAction() == Action.RIGHT_CLICK_BLOCK){
-
-    		if (block.getType() == Material.CAKE_BLOCK){
-    			/* ケーキを右クリック */
-
-    			boolean cancell = true;
-
-    			// 手に持っているアイテムで分岐
-    			switch(player.getItemInHand().getType()){
-    				// 牛乳バケツ
-    				case MILK_BUCKET:
-    					CakeActions.clickWithMilkBucket(player, block);
-    					break;
-
-    				// ポーション
-    				case POTION:
-    					Potion potion = Potion.fromItemStack(player.getItemInHand());
-    					if (potion.getType() == PotionType.POISON && !potion.isSplash()){
-    						CakeActions.clickWithPoison(player, block, potion.getLevel());
-    						break;
-    					}
-    					// 毒ポーション以外はデフォルト処理へ継続させる
-    					// break;
-
-    				// その他
-					default:
-						// 毒ケーキを食べた
-						Integer level = CakeManager.getPoisonCake(block.getLocation());
-						if (level != null){
-							CakeActions.eatPoisonousCake(player, block, level);
-						}
-						// 通常のケーキを食べた
-						else{
-							cancell = false;
-						}
-    			}
-
-    			if (cancell){
-    				event.setCancelled(true);
-    				event.setUseInteractedBlock(Result.DENY);
-    				event.setUseItemInHand(Result.DENY);
-    			}
-    		}
+    	if (action){
+    		event.setCancelled(true);
+    		event.setUseInteractedBlock(Result.DENY);
+    		event.setUseItemInHand(Result.DENY);
     	}
     }
 }
