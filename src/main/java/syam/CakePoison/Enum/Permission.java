@@ -19,8 +19,9 @@ public enum Permission {
 	// Ignore
 	IGNORE ("ignore"),
 
-	// ReloadCommand
-	RELOAD ("reload"),
+	// Admin Commands
+	RELOAD ("admin.reload"),
+	SAVE ("admin.save"),
 	;
 
 	// ノードヘッダー

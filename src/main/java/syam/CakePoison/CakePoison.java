@@ -21,6 +21,8 @@ import syam.CakePoison.Cake.CakeFileManager;
 import syam.CakePoison.Cake.CakeManager;
 import syam.CakePoison.Command.BaseCommand;
 import syam.CakePoison.Command.HelpCommand;
+import syam.CakePoison.Command.ReloadCommand;
+import syam.CakePoison.Command.SaveCommand;
 import syam.CakePoison.Listener.CPPlayerListener;
 import syam.CakePoison.Util.Metrics;
 
@@ -79,6 +81,9 @@ public class CakePoison extends JavaPlugin{
 		// マネージャ
 		cm = new CakeManager(this);
 
+		// 毒ケーキリスト読み出し
+		CakeFileManager.loadData();
+
 		// メッセージ表示
 		PluginDescriptionFile pdfFile=this.getDescription();
 		log.info("["+pdfFile.getName()+"] version "+pdfFile.getVersion()+" is enabled!");
@@ -109,7 +114,8 @@ public class CakePoison extends JavaPlugin{
 		// General Commands
 
 		// Admin Commands
-
+		commands.add(new ReloadCommand());
+		commands.add(new SaveCommand());
 	}
 
 	/**
