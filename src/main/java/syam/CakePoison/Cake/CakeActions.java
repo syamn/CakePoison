@@ -17,6 +17,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionType;
 
 import syam.CakePoison.CakePoison;
+import syam.CakePoison.Enum.Permission;
 import syam.CakePoison.Util.Actions;
 
 /**
@@ -35,14 +36,18 @@ public class CakeActions {
      * @param block クリックしたケーキブロック
      */
     public static void clickWithMilkBucket(Player player, Block block){
-    	// クリックしたケーキが毒ケーキなら解毒する
-    	if(CakeManager.isPoisonCake(block.getLocation())){
-    		CakeManager.removePoisonCake(block.getLocation());
-    		Actions.message(null, player, "&aこの毒ケーキを解毒しました！");
-    	}
+    	// Check permission
+    	if (Permission.DETOXIFYING.hasPerm(player)){
+	    	// クリックしたケーキが毒ケーキなら解毒する
+	    	if(CakeManager.isPoisonCake(block.getLocation())){
+	    		CakeManager.removePoisonCake(block.getLocation());
+	    		Actions.message(null, player, "&aこの毒ケーキを解毒しました！");
+    		}
 
-    	// バケツを空にする
-    	player.setItemInHand(new ItemStack(Material.BUCKET, 1));
+	    	// バケツを空にする
+	    	player.setItemInHand(new ItemStack(Material.BUCKET, 1));
+    	}
+    	// not send no perm message
     }
 
     /**
@@ -52,12 +57,19 @@ public class CakeActions {
      * @param level クリックした毒ポーションのレベル
      */
     public static void clickWithPoison(Player player, Block block, int level){
-    	Integer oldLevel = CakeManager.getPoisonCake(block.getLocation());
-    	int newLevel = (oldLevel == null) ? level : level + oldLevel;
-    	CakeManager.setPoisonCake(block.getLocation(), newLevel);
+    	// Check permission
+    	if (Permission.POISONING.hasPerm(player)){
+	    	Integer oldLevel = CakeManager.getPoisonCake(block.getLocation());
+	    	int newLevel = (oldLevel == null) ? level : level + oldLevel;
+	    	CakeManager.setPoisonCake(block.getLocation(), newLevel);
 
-    	Actions.message(null, player, "&aこれはレベル"+newLevel+"の&c毒ケーキ&aになりました！");
-    	player.setItemInHand(new ItemStack(Material.GLASS_BOTTLE, 1));
+	    	Actions.message(null, player, "&aこれはレベル"+newLevel+"の&c毒ケーキ&aになりました！");
+	    	player.setItemInHand(new ItemStack(Material.GLASS_BOTTLE, 1));
+    	}
+    	// send no perm message
+    	else{
+    		Actions.message(null, player, "&c毒ケーキにする権限がありません！");
+    	}
     }
 
     /**
@@ -66,12 +78,26 @@ public class CakeActions {
      * @param block クリックしたケーキブロック
      */
     public static void eatPoisonousCake(Player player, Block block, int level){
-    	Potion potion = new Potion(PotionType.POISON, level);
-    	potion.apply(player);
+    	// Check permission
+    	if (!Permission.IGNORE.hasPerm(player)){
+	    	Potion potion = new Potion(PotionType.POISON, level);
+	    	potion.apply(player);
 
+	    	Actions.message(null, player, "&cこれは毒ケーキでした！");
+    	}
+    	// has Ignore permission
+    	else{
+    		if (player.getHealth() < 18){
+    			player.setHealth(player.getHealth() + 2);
+    		}else{
+    			player.setHealth(20);
+    		}
+
+    		Actions.message(null, player, "&aこれは毒ケーキですが、あなたは権限によって守られています！");
+    	}
+
+    	// Block update
     	updateEatCakeBlock(block);
-
-    	Actions.message(null, player, "&cこれは毒ケーキでした！");
     }
 
     /**

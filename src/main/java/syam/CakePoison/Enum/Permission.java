@@ -16,8 +16,12 @@ import syam.CakePoison.CakePoison;
 public enum Permission {
 	/* 権限ノード */
 
-	// Ignore
-	IGNORE ("ignore"),
+	// Poisoning, Detoxifying
+	POISONING ("user.poisoning"),
+	DETOXIFYING ("user.detoxifying"),
+
+	// Ignore poison
+	IGNORE ("admin.ignore"),
 
 	// Admin Commands
 	RELOAD ("admin.reload"),

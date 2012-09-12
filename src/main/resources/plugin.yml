@@ -12,12 +12,37 @@ commands:
       aliases: [cake, cp]
       description: To see the CakePoison help.
 permissions:
-    cakepoison.admin.reload:
+    cakepoison.*:
         default: op
-        description: Allow use reload command.
+        description: Allow all CakePoison permission.
+        children:
+            cakepoison.user.*: true
+            cakepoison.admin.*: true
+    cakepoison.user.*:
+        default: op
+        description: Allow users CakePoison permission.
+        children:
+            cakepoison.user.poisoning: true
+            cakepoison.user.detoxifying: true
+    cakepoison.admin.*:
+        default: op
+        description: Allow users CakePoison permission.
+        children:
+            cakepoison.admin.ignore: true
+            cakepoison.admin.save: true
+            cakepoison.admin.reload: true
+    cakepoison.user.poisoning:
+        default: op
+        description: Allow poisoning cake.
+    cakepoison.user.detoxifying:
+        default: op
+        description: Allow detoxifying poisonous cake.
+    cakepoison.admin.ignore:
+        default: op
+        description: Ignore poisonous cake.
     cakepoison.admin.save:
         default: op
         description: Allow use save command.
-    cakepoison.ignore:
+    cakepoison.admin.reload:
         default: op
-        description: Ignore poisonous cake.
+        description: Allow use reload command.
