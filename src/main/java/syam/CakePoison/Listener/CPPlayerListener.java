@@ -7,6 +7,7 @@ package syam.CakePoison.Listener;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -80,7 +81,7 @@ public class CPPlayerListener implements Listener{
 
     	if (!action){
     		Integer level = CakeManager.getPoisonCake(block.getLocation());
-			if (level != null && player.getFoodLevel() < 20){
+			if (level != null && player.getFoodLevel() < 20 && player.getGameMode().equals(GameMode.SURVIVAL)){
 				CakeActions.eatPoisonousCake(player, block, level);
 				action = true;
 			}
