@@ -85,6 +85,7 @@ public class CakeActions {
     		block.setData(data);
     	}else{
     		block.setType(Material.AIR);
+    		CakeManager.removePoisonCake(block.getLocation());
     	}
     }
 }

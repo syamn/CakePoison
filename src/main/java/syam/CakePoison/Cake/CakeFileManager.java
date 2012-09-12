@@ -17,9 +17,11 @@ import javax.print.PrintService;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 
 import syam.CakePoison.CakePoison;
+import syam.CakePoison.Util.Actions;
 import syam.CakePoison.Util.TextFileHandler;
 import syam.CakePoison.Util.Util;
 
@@ -72,12 +74,20 @@ public class CakeFileManager {
 
     			// レベルチェック
     			if (!Util.isInteger(data[1])){
-    				log.warning(logPrefix+ "Skipping line "+line+": could not convert to numeric. ("+coord[0]+")");
+    				log.warning(logPrefix+ "Skipping line "+line+": could not convert to numeric. ("+data[1]+")");
+    				continue;
+    			}
+
+    			Location loc = new Location(world, new Double(coord[1]), new Double(coord[2]), new Double(coord[3]));
+
+    			// ブロックチェック
+    			if (loc.getBlock() == null || loc.getBlock().getType() != Material.CAKE_BLOCK){
+    				log.warning(logPrefix+ "Skipping line "+line+": block is not CAKE_BLOCK. ("+Actions.getBlockLocationString(loc)+")");
     				continue;
     			}
 
     			// マップに追加
-    			newMap.put(new Location(world, new Double(coord[1]), new Double(coord[2]), new Double(coord[3])), Integer.parseInt(data[1]));
+    			newMap.put(loc, Integer.parseInt(data[1]));
     		}
 
     		// set newMap
@@ -108,6 +118,12 @@ public class CakeFileManager {
     	for (Entry<Location, Integer> cake : CakeManager.getPoisonCakeMap().entrySet()){
     		Location loc = cake.getKey();
     		int level = cake.getValue();
+
+    		// ブロックチェック
+			if (loc.getBlock() == null || loc.getBlock().getType() != Material.CAKE_BLOCK){
+				log.warning(logPrefix+ "Skipping save block (" + Actions.getBlockLocationString(loc) + "): Is not CAKE_BLOCK.");
+				continue;
+			}
 
     		lines.add(loc.getWorld().getName() + "," + loc.getX() + "," + loc.getY() + "," + loc.getZ() + "#" + level); // add raw line
     	}

@@ -23,6 +23,7 @@ import syam.CakePoison.Command.BaseCommand;
 import syam.CakePoison.Command.HelpCommand;
 import syam.CakePoison.Command.ReloadCommand;
 import syam.CakePoison.Command.SaveCommand;
+import syam.CakePoison.Listener.CPBlockListener;
 import syam.CakePoison.Listener.CPPlayerListener;
 import syam.CakePoison.Util.Metrics;
 
@@ -38,6 +39,7 @@ public class CakePoison extends JavaPlugin{
 
 	// ** Listener **
 	CPPlayerListener playerListener = new CPPlayerListener(this);
+	CPBlockListener blockListener = new CPBlockListener(this);
 
 	// ** Commands **
 	public static List<BaseCommand> commands = new ArrayList<BaseCommand>();
@@ -74,6 +76,7 @@ public class CakePoison extends JavaPlugin{
 
 		// Regist Listeners
 		pm.registerEvents(playerListener, this);
+		pm.registerEvents(blockListener, this);
 
 		// コマンド登録
 		registerCommands();
