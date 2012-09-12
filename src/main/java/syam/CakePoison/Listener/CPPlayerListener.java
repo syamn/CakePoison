@@ -48,11 +48,6 @@ public class CPPlayerListener implements Listener{
     public void onPlayerInteract(final PlayerInteractEvent event){
     	Player player = event.getPlayer();
 
-    	// allow only syamn to use this section for developing
-    	// TODO: remove this developer check
-    	if (!player.equals(Bukkit.getPlayer("syamn")))
-    		return; //debug
-
     	Block block = event.getClickedBlock();
     	if (block == null || block.getType() != Material.CAKE_BLOCK){
     		return;
