@@ -5,7 +5,9 @@
 #==================#
 #   Basic Config   #
 #==================#
-# none :D
+# Logging poisoning and detoxifying cake?
+LogToFile: true
+LogFilePath: plugins/CakePoison/actions.log
 
 #==================#
 #   DO NOT TOUCH   #

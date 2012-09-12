@@ -33,14 +33,15 @@ public class ConfigurationManager {
 	private CakePoison plugin;
 	private FileConfiguration conf;
 
-	private static File pluginDir = new File("plugins", "BookEditor");
+	private static File pluginDir = new File("plugins", "CakePoison");
 
 	// デフォルトの設定定数
-	// TODO: stuff..
+	private static final String defaultLogFilePath = "";
 
 	// 設定項目
 	/* Basic Configs */
-	// TODO: stuff..
+	public boolean logToFile = true;
+	public String logFilePath = defaultLogFilePath;
 
 	/**
 	 * コンストラクタ
@@ -70,7 +71,8 @@ public class ConfigurationManager {
 		plugin.reloadConfig();
 
 		/* Basic Configs */
-		// TODO: stuff...
+		logToFile = plugin.getConfig().getBoolean("LogToFile", true);
+		logFilePath = plugin.getConfig().getString("LogFilePath", defaultLogFilePath);
 
 	}
 

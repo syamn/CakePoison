@@ -12,6 +12,7 @@ import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Cake;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionType;
@@ -42,6 +43,12 @@ public class CakeActions {
 	    	if(CakeManager.isPoisonCake(block.getLocation())){
 	    		CakeManager.removePoisonCake(block.getLocation());
 	    		Actions.message(null, player, "&aこの毒ケーキを解毒しました！");
+
+	    		// Logging
+		    	if (CakePoison.getInstance().getConfigs().logToFile){
+			    	Actions.log(CakePoison.getInstance().getConfigs().logFilePath,
+			    			"Player " + player.getName() + " detoxifying poisonous cake! ("+Actions.getBlockLocationString(block.getLocation()) +")");
+		    	}
     		}
 
 	    	// バケツを空にする
@@ -65,6 +72,12 @@ public class CakeActions {
 
 	    	Actions.message(null, player, "&aこれはレベル"+newLevel+"の&c毒ケーキ&aになりました！");
 	    	player.setItemInHand(new ItemStack(Material.GLASS_BOTTLE, 1));
+
+	    	// Logging
+	    	if (CakePoison.getInstance().getConfigs().logToFile){
+		    	Actions.log(CakePoison.getInstance().getConfigs().logFilePath,
+		    			"Player " + player.getName() + " make " + newLevel + " level poisonous cake! ("+Actions.getBlockLocationString(block.getLocation()) +")");
+	    	}
     	}
     	// send no perm message
     	else{
