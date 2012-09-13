@@ -66,7 +66,9 @@ public class CakeActions {
 	    	int newLevel = (oldLevel == null) ? level : level + oldLevel;
 	    	CakeManager.setPoisonCake(block.getLocation(), newLevel);
 
-	    	Actions.message(null, player, "&aこれはレベル"+newLevel+"の&c毒ケーキ&aになりました！");
+	    	if (newLevel > 2) Actions.message(null, player, "&aこれはレベル2の&c毒ケーキ&aになりました！");
+	    	else Actions.message(null, player, "&aこれはレベル"+newLevel+"の&c毒ケーキ&aになりました！");
+
 	    	player.setItemInHand(new ItemStack(Material.GLASS_BOTTLE, 1));
 
 	    	// Logging
@@ -89,6 +91,7 @@ public class CakeActions {
     public static void eatPoisonousCake(Player player, Block block, int level){
     	// Check permission
     	if (!Permission.IGNORE.hasPerm(player)){
+    		if (level > 2) level = 2;
 	    	Potion potion = new Potion(PotionType.POISON, level);
 	    	potion.apply(player);
 
